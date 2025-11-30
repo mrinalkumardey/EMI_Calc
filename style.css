@@ -1,9 +1,9 @@
-/* Reset & Base */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* ============================================= */
+/*           YOUR EASY EMI CALCULATOR            */
+/*           Final Professional Version          */
+/* ============================================= */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -17,17 +17,15 @@ body {
   line-height: 1.6;
 }
 
-/* Main Container */
 .container {
   background: #ffffff;
   padding: 2.5rem;
   border-radius: 20px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-  max-width: 650px;
+  max-width: 680px;
   width: 100%;
 }
 
-/* Heading & Tagline */
 h1 {
   text-align: center;
   margin-bottom: 10px;
@@ -40,61 +38,97 @@ h1 {
   text-align: center;
   color: #555;
   font-size: 0.95rem;
-  margin-bottom: 25px;
+  margin-bottom: 8px;
   padding: 0 20px;
   font-style: italic;
 }
 
-/* Tabs */
+/* TABS – Side by side, super clear */
 .tabs {
   display: flex;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #eee;
+  background: #f0f2ff;
+  border-radius: 16px;
+  padding: 10px;
+  margin: 30px 0 20px 0;
+  box-shadow: inset 0 4px 15px rgba(0,0,0,0.1);
+  gap: 12px;
 }
 
 .tab-btn {
   flex: 1;
-  padding: 14px 10px;
-  background: #f1f3f9;
+  padding: 18px 12px;
+  background: transparent;
   border: none;
-  border-radius: 10px 10px 0 0;
-  font-size: 1rem;
+  border-radius: 14px;
+  font-size: 1.05rem;
   font-weight: 600;
+  color: #666;
   cursor: pointer;
-  transition: all 0.3s ease;
-  color: #555;
+  transition: all 0.35s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 60px;
 }
 
 .tab-btn:hover {
-  background: #e0e4ff;
+  background: rgba(102, 126, 234, 0.15);
+  color: #667eea;
+  transform: translateY(-2px);
 }
 
 .tab-btn.active {
   background: #667eea;
   color: white;
-  box-shadow: 0 -3px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+  transform: translateY(-4px);
 }
 
-/* Tab Content */
+.tab-btn::before {
+  content: attr(data-num);
+  width: 32px;
+  height: 32px;
+  background: rgba(255,255,255,0.3);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.tab-btn.active::before {
+  background: white;
+  color: #667eea;
+}
+
+.tab-hint {
+  text-align: center;
+  color: #777;
+  font-size: 0.94rem;
+  margin: -10px 0 30px 0;
+}
+
 .tab-content {
   background: #f8f9ff;
-  padding: 25px;
-  border-radius: 0 0 16px 16px;
-  min-height: 400px;
+  padding: 30px;
+  border-radius: 16px;
+  min-height: 480px;
+  box-shadow: inset 0 4px 15px rgba(0,0,0,0.06);
 }
 
-/* Grid Layout */
+/* Forms */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 18px;
-  margin-bottom: 10px;
 }
 
-/* Input Groups */
-.input-group {
-  margin-bottom: 5px;
-}
+.input-group { margin-bottom: 5px; }
 
 label {
   display: block;
@@ -110,18 +144,18 @@ input, select {
   border: 2px solid #ddd;
   border-radius: 10px;
   font-size: 1rem;
-  transition: border 0.3s ease;
   background: #fff;
+  transition: border 0.3s;
 }
 
 input:focus, select:focus {
   outline: none;
   border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+  box-shadow: 0 0 0 4px rgba(102,126,234,0.15);
 }
 
 /* Buttons */
-button {
+button:not(.secondary) {
   width: 100%;
   padding: 16px;
   margin-top: 20px;
@@ -130,30 +164,26 @@ button {
   font-size: 1.2rem;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-button:not(.secondary) {
   background: #667eea;
   color: white;
+  transition: all 0.3s;
 }
 
 button:not(.secondary):hover {
   background: #5a6fd8;
   transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 12px 25px rgba(102,126,234,0.35);
 }
 
 button.secondary {
   background: #444;
   color: white;
   font-size: 1rem;
-  padding: 12px;
+  padding: 14px;
+  margin-top: 20px;
 }
 
-button.secondary:hover {
-  background: #333;
-}
+button.secondary:hover { background: #222; }
 
 /* Results */
 .summary-grid {
@@ -169,7 +199,6 @@ button.secondary:hover {
   border-radius: 12px;
   text-align: center;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  border: 1px solid #f0f0f0;
 }
 
 .summary-grid strong {
@@ -180,7 +209,6 @@ button.secondary:hover {
 }
 
 .summary-grid span {
-  display: block;
   font-size: 1.5rem;
   font-weight: bold;
   color: #667eea;
@@ -188,88 +216,62 @@ button.secondary:hover {
 
 .result-box {
   background: #fff;
-  padding: 20px;
+  padding: 22px;
   border-radius: 12px;
   margin-top: 20px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
   border-left: 5px solid #667eea;
 }
 
-.result-box p {
-  margin: 12px 0;
-  font-size: 1.1rem;
-}
-
-.result-box strong {
-  color: #333;
-}
+.result-box p { margin: 12px 0; font-size: 1.1rem; }
 
 /* Table */
 .table-wrapper {
-  max-height: 400px;
+  max-height: 420px;
   overflow-y: auto;
-  margin: 20px 0;
+  margin: 25px 0;
   border-radius: 10px;
   border: 1px solid #ddd;
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-}
-
+table { width: 100%; border-collapse: collapse; background: white; }
 th {
   background: #667eea;
   color: white;
-  padding: 14px 10px;
+  padding: 15px 10px;
   text-align: left;
   font-weight: 600;
   position: sticky;
   top: 0;
   z-index: 10;
 }
-
 td {
   padding: 12px 10px;
   border-bottom: 1px solid #eee;
   text-align: right;
   font-size: 0.95rem;
 }
-
-td:first-child, th:first-child {
-  text-align: left;
-}
-
-tr:hover {
-  background-color: #f8f9ff;
-}
+td:first-child, th:first-child { text-align: left; }
+tr:hover { background-color: #f8f9ff; }
 
 /* Footer */
 footer {
   text-align: center;
-  margin-top: 30px;
+  margin-top: 40px 0 10px;
   padding-top: 20px;
   font-size: 0.9rem;
   color: #777;
   border-top: 1px solid #eee;
 }
+footer a { color: #667eea; text-decoration: none; font-weight: 600; }
+footer a:hover { text-decoration: underline; }
 
-footer a {
-  color: #667eea;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-footer a:hover {
-  text-decoration: underline;
-}
-
-/* Responsive */
+/* Mobile */
 @media (max-width: 480px) {
   .container { padding: 1.5rem; }
-  h1 { font-size: 1.6rem; }
-  .tab-btn { font-size: 0.9rem; padding: 12px 6px; }
+  h1 { font-size: 1.7rem; }
+  .tabs { flex-direction: column; }
+  .tab-btn { min-height: 56px; }
   .grid { grid-template-columns: 1fr; }
 }

@@ -16,61 +16,59 @@
       Actual EMI and Amortization Schedule may be different depending upon Organization's internal policies
     </p>
 
-    <!-- Tab Buttons -->
+    <!-- Tabs -->
     <div class="tabs">
-      <button class="tab-btn active" onclick="openTab(1)">1. EMI Calculation</button>
-      <button class="tab-btn" onclick="openTab(2)">2. Processing Fees & Tax</button>
-      <button class="tab-btn" onclick="openTab(3)">3. Amortization Schedule</button>
+      <button class="tab-btn active" data-num="1" onclick="openTab(1)">EMI Calculation</button>
+      <button class="tab-btn" data-num="2" onclick="openTab(2)">Processing Fees & Tax</button>
+      <button class="tab-btn" data-num="3" onclick="openTab(3)">Amortization Schedule</button>
     </div>
+    <p class="tab-hint">Click any tab to explore</p>
 
-    <!-- Tab 1: EMI Calculation -->
+    <!-- TAB 1: EMI Calculation (Independent) -->
     <div id="tab1" class="tab-content" style="display: block;">
       <div class="grid">
         <div class="input-group">
           <label>Loan Amount (₹)</label>
-          <input type="number" id="principal" placeholder="e.g. 100000" />
+          <input type="number" id="principal" placeholder="e.g. 500000" />
         </div>
         <div class="input-group">
           <label>Interest Rate (% per year)</label>
-          <input type="number" step="0.01" id="rate" placeholder="e.g. 8.5" />
+          <input type="number" step="0.01" id="rate" placeholder="e.g. 9.5" />
         </div>
         <div class="input-group">
-          <label>Loan Tenure (in Months)</label>
+          <label>Tenure (Months)</label>
           <input type="number" id="months" placeholder="e.g. 60" min="1" />
         </div>
-        <div class="input-group">
-          <label>Disbursement Date</label>
-          <input type="date" id="startDate" />
-        </div>
-        <div class="input-group">
-          <label>Preferred EMI Day</label>
-          <select id="deductionDay">
-            <option value="3">3rd of Month</option>
-            <option value="10">10th of Month</option>
-          </select>
-        </div>
       </div>
-      <button onclick="calculateAll()">Calculate EMI</button>
 
-      <div class="summary-grid" id="emiSummary" style="display:none; margin-top:20px;">
+      <button onclick="calculateEMIOnly()">Calculate EMI</button>
+
+      <div class="summary-grid" id="emiSummary" style="display:none; margin-top:25px;">
         <div><strong>Monthly EMI</strong><span id="emi">₹0</span></div>
         <div><strong>Total Payable</strong><span id="total">₹0</span></div>
         <div><strong>Total Interest</strong><span id="interest">₹0</span></div>
       </div>
     </div>
 
-    <!-- Tab 2: Processing Fees & Tax -->
+    <!-- TAB 2: Processing Fees & Tax (Independent) -->
     <div id="tab2" class="tab-content" style="display: none;">
       <div class="grid">
         <div class="input-group">
-          <label>Processing Fee (% of Loan)</label>
+          <label>Loan Amount (₹) for Fee Calculation</label>
+          <input type="number" id="fee_principal" placeholder="e.g. 500000" />
+        </div>
+        <div class="input-group">
+          <label>Processing Fee (%)</label>
           <input type="number" step="0.01" id="procFeeRate" value="1.25" />
         </div>
         <div class="input-group">
-          <label>GST on Processing Fee (%)</label>
+          <label>GST on Fee (%)</label>
           <input type="number" step="0.01" id="gstRate" value="18" />
         </div>
       </div>
+
+      <button onclick="calculateFeesOnly()">Calculate Fees</button>
+
       <div class="result-box" id="feeResults" style="display:none; margin-top:20px;">
         <p><strong>Processing Fee:</strong> <span id="procFee">₹0</span></p>
         <p><strong>GST Amount:</strong> <span id="gst">₹0</span></p>
@@ -78,31 +76,70 @@
       </div>
     </div>
 
-    <!-- Tab 3: Amortization Schedule -->
+    <!-- TAB 3: Full Amortization Schedule (Fully Independent) -->
     <div id="tab3" class="tab-content" style="display: none;">
-      <canvas id="pieChart" style="margin: 20px 0; max-height: 300px;"></canvas>
-      <div class="table-wrapper">
-        <table id="amortTable">
-          <thead>
-            <tr>
-              <th>Month</th>
-              <th>EMI Date</th>
-              <th>EMI (₹)</th>
-              <th>Principal (₹)</th>
-              <th>Interest (₹)</th>
-              <th>Balance (₹)</th>
-            </tr>
-          </thead>
-          <tbody id="amortBody"></tbody>
-        </table>
+      <h2 style="margin-bottom:20px; color:#667eea;">Generate Full Amortization Schedule</h2>
+      
+      <div class="grid">
+        <div class="input-group">
+          <label>Loan Amount (₹)</label>
+          <input type="number" id="amort_principal" placeholder="e.g. 100000" />
+        </div>
+        <div class="input-group">
+          <label>Interest Rate (% p.a.)</label>
+          <input type="number" step="0.01" id="amort_rate" placeholder="e.g. 22.25" />
+        </div>
+        <div class="input-group">
+          <label>Tenure (Months)</label>
+          <input type="number" id="amort_months" placeholder="e.g. 12" min="1" />
+        </div>
+        <div class="input-group">
+          <label>Disbursement Date</label>
+          <input type="date" id="amort_startDate" />
+        </div>
+        <div class="input-group">
+          <label>Preferred EMI Day</label>
+          <select id="amort_deductionDay">
+            <option value="3">3rd of Month</option>
+            <option value="10">10th of Month</option>
+          </select>
+        </div>
       </div>
-      <button onclick="exportToPDF()" class="secondary" id="pdfBtn" style="display:none; margin-top:15px;">
-        Export Schedule as PDF
-      </button>
+
+      <button onclick="generateAmortizationOnly()">Generate Schedule</button>
+
+      <div id="amortResults" style="display:none; margin-top:30px;">
+        <div class="summary-grid">
+          <div><strong>Monthly EMI</strong><span id="amort_emi">₹0</span></div>
+          <div><strong>Total Payable</strong><span id="amort_total">₹0</span></div>
+          <div><strong>Total Interest</strong><span id="amort_interest">₹0</span></div>
+          <div><strong>First EMI Date</strong><span id="amort_firstEMI">—</span></div>
+        </div>
+
+        <canvas id="pieChart" style="margin: 30px 0; max-height: 320px;"></canvas>
+
+        <div class="table-wrapper">
+          <table id="amortTable">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>EMI Date</th>
+                <th>EMI (₹)</th>
+                <th>Principal (₹)</th>
+                <th>Interest (₹)</th>
+                <th>Balance (₹)</th>
+              </tr>
+            </thead>
+            <tbody id="amortBody"></tbody>
+          </table>
+        </div>
+
+        <button onclick="exportToPDF()" class="secondary">Export as PDF</button>
+      </div>
     </div>
 
     <footer>
-      Made with ❤️ by 
+      Made with passion by 
       <a href="https://linkedin.com/in/mrinal-kumar-dey" target="_blank">Mrinal Kumar Dey</a>
     </footer>
   </div>
