@@ -1,7 +1,7 @@
 # Your Easy EMI Calculator  
 **Bank-Grade • 100% Accurate • Made for Real Indian Banking Rules**
 
-Live Demo → https://mrinalkumardey.github.io/emi-calculator-web  
+Live Demo → https://github.com/mrinalkumardey/EMI_Calc  
 
 A clean, responsive, and highly accurate EMI calculator built with pure HTML, CSS & JavaScript – no frameworks, no backend, instantly deployable.
 
